@@ -1,21 +1,18 @@
-const registeredHouse = [];
+const Home = require('../models/home');
 
 exports.getAddHome = (req, res, next) => {
   res.render('addHome', { pageTitle: 'Add Home' });
 };
 
 exports.postAddHome = (req, res, next) => {
-  registeredHouse.push({
-    houseName: req.body.houseName,
-    pricePerNight: req.body.ppn,
-    location: req.body.location,
-    rating: req.body.rating,
-  });
+  const { houseName, ppn, location, rating } = req.body;
+  const home = new Home(houseName, ppn, location, rating);
+  home.save();
   res.render('homeAdded', { pageTitle: 'home is added' });
 };
 
 exports.getHomes = (req, res, next) => {
-  console.log(registeredHouse);
+  const registeredHouse = Home.fetch();
   res.render('home', {
     registeredHouse: registeredHouse,
     pageTitle: 'airbnb home2',
