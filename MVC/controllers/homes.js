@@ -12,9 +12,10 @@ exports.postAddHome = (req, res, next) => {
 };
 
 exports.getHomes = (req, res, next) => {
-  const registeredHouse = Home.fetch();
-  res.render('home', {
-    registeredHouse: registeredHouse,
-    pageTitle: 'airbnb home2',
-  });
+  const registeredHouse = Home.fetch((registeredHouse) =>
+    res.render('home', {
+      registeredHouse: registeredHouse,
+      pageTitle: 'airbnb home2',
+    })
+  );
 };
