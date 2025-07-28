@@ -32,3 +32,17 @@ exports.getFavouriteList = (req, res, next) => {
     })
   );
 };
+
+exports.getHomeDetails = (req, res, next) => {
+  const homeId = req.params.homeId;
+  Home.findById(homeId, (home) => {
+    if (!home) {
+      res.redirect('/homes');
+    } else {
+      res.render('store/home-detail', {
+        home: home,
+        pageTitle: 'HomeDetail',
+      });
+    }
+  });
+};
