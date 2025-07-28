@@ -14,7 +14,7 @@
       
       
       <ul class="space-y-4">
-        <% registeredHouse.forEach(home=>{ %>
+        <% favouriteHome.forEach(home=>{ %>
          
       <li class="flex flex-col space-x-5 space-y-3  bg-gray-100 p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300">
         <span class="text-4xl font-bold"><%=home.houseName %></span>
@@ -22,7 +22,7 @@
         <span class="text-lg italic"><%=home.location %></span>
         <span class="font-bold text-xl"><%=home.rating %> ⭐</span>
 
-        <button class="bg-green-500 p-2 ">Book</button>
+   
       </li>
          
         <% }) %>

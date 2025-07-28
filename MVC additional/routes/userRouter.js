@@ -8,9 +8,10 @@ const userRouter = express.Router();
 
 userRouter.get('/', storeController.getIndex);
 userRouter.get('/booking', storeController.getBooking);
+userRouter.get('/favourite', storeController.getFavouriteList);
 
 userRouter.get('/homes', storeController.getHomes);
-userRouter.get('/favourite', storeController.getFavouriteList);
 userRouter.get('/homes/:homeId', storeController.getHomeDetails);
+userRouter.post('/favourite', storeController.postAddToFavourite);
 
 module.exports = userRouter;
