@@ -6,11 +6,14 @@ const rootDir = require('../utils/pathUtil');
 const hostRouter = express.Router();
 
 hostRouter.get('/add-home', (req, res, next) => {
-  res.sendFile(path.join(rootDir, 'views', 'add-home.html'));
+  res.render('add-home', { pageTitle: 'Add your home' });
 });
 
+const registeredHomes = [];
 hostRouter.post('/add-home', (req, res, next) => {
-  res.sendFile(path.join(rootDir, 'views', 'homeadded.html'));
+  registeredHomes.push({ houseName: req.body.houseName });
+  res.render('homeadded', { pageTitle: 'Home added' });
 });
 
-module.exports = hostRouter;
+exports.registeredHomes = registeredHomes;
+exports.hostRouter = hostRouter;
