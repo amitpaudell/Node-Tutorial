@@ -26,7 +26,7 @@ app.use(userRouter);
 app.use('/host', hostRouter);
 
 app.use((req, res, next) => {
-  res.status(404).render('404', { pageTitle: 'Not Found' });
+  res.status(404).render('404', { pageTitle: 'Not Found', currentPage: '404' });
 });
 
 const PORT = 3000;

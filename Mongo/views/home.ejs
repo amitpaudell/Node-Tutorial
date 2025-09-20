@@ -6,10 +6,11 @@
       <h2 class="text-5xl text-center">Here are our registed House</h2>
 
       <ul>
+        <div class="flex space-x-3">
         <% registeredHomes.forEach((home)=>{ %>
           <div class="flex flex-col bg-white shadow-sm border border-slate-200 rounded-lg my-6 w-96">
             <div class="m-2.5 overflow-hidden rounded-md h-80 flex justify-center items-center">
-              <img class="w-full h-full object-cover" src=<%=home.photo %> alt="profile-picture" />
+              <img class="w-full h-full object-cover" src=<%=home.photoUrl %> alt="profile-picture" />
             </div>
             <div class="p-6 text-center">
               <h4 class="mb-1 text-xl font-semibold text-slate-800">
@@ -17,7 +18,7 @@
               </h4>
               <p
                 class="text-sm font-semibold text-slate-500 ">
-                Rs <%=home.pricePerNight %> per night
+                Rs <%=home.price %> per night
               </p>
               <p class="text-base text-slate-600 mt-4 font-light ">
                 Location: <%=home.location %> 
@@ -31,6 +32,7 @@
           </div>
 
         <% }) %>
+        </div>
       </ul>
     </main>
   </body>
