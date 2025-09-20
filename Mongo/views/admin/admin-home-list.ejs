@@ -3,7 +3,7 @@
 <body>
 <%-include('../partials/nav') %>
     <main>
-      <h2 class="text-5xl text-center">Here are our registed House</h2>
+      <h2 class="text-5xl text-center">Here are our <span class="text-red-800">host</span> registed House</h2>
 
       <ul>
         <div class="flex space-x-3">
@@ -30,10 +30,14 @@
                 Rating: <%=home.rating %>  ⭐
               </p>
               
-              <button class="min-w-32  rounded-md bg-green-800 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
-                Book
+              <div class="flex flex-col space-y-3.5">
+              <button class="min-w-32  rounded-md bg-blue-800 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg  focus:shadow-none 0  active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
+                Edit
                </button>
-
+               <button class="min-w-32  rounded-md bg-red-600 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg  focus:shadow-none 0  active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
+                Delete
+               </button>
+</div>
              
             </div>
           </div>

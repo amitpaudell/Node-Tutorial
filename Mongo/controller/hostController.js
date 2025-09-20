@@ -16,3 +16,13 @@ exports.postAddHome = (req, res, next) => {
     currentPage: 'AddHome',
   });
 };
+
+exports.getHostHomes = (req, res, next) => {
+  Home.fetchAll((registeredHomes) => {
+    res.render('admin/admin-home-list', {
+      registeredHomes: registeredHomes,
+      pageTitle: 'Host Home List',
+      currentPage: 'host-homes',
+    });
+  });
+};
