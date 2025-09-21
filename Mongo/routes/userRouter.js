@@ -9,4 +9,5 @@ userRouter.get('/booking', homeController.getBookings);
 userRouter.get('/favourite', homeController.getFavouriteList);
 userRouter.get('/homes/:homeId', homeController.getHomeDetails);
 
+userRouter.post('/favourite', homeController.getPostFavourite);
 module.exports = userRouter;
