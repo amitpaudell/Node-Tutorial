@@ -1,3 +1,4 @@
+const Favourite = require('../models/favourite');
 const Home = require('../models/home');
 
 exports.getIndex = (req, res, next) => {
@@ -36,9 +37,13 @@ exports.getFavouriteList = (req, res, next) => {
   });
 };
 
-exports.getPostFavourite = (req, res, next) => {
-  console.log(req.body);
-  res.redirect('/favourite');
+exports.postAddFavourite = (req, res, next) => {
+  Favourite.addToFavourite(req.body.id, (error) => {
+    if (error) {
+      console.log('Error while marking favourite');
+    }
+    res.redirect('/favourite');
+  });
 };
 
 exports.getHomeDetails = (req, res, next) => {
