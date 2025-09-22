@@ -1,25 +1,25 @@
 [
   {
-    "id": "1",
-    "houseName": "Amit house",
+    "houseName": "Amit house bombay",
     "price": "334",
     "location": "butwal",
     "rating": "4",
-    "photoUrl": "https://news.airbnb.com/wp-content/uploads/sites/4/2019/06/PJM020719Q202_Luxe_WanakaNZ_LivingRoom_0264-LightOn_R1.jpg?resize=2400,1260"
+    "photoUrl": "https://news.airbnb.com/wp-content/uploads/sites/4/2019/06/PJM020719Q202_Luxe_WanakaNZ_LivingRoom_0264-LightOn_R1.jpg?resize=2400,1260",
+    "id": "1"
   },
   {
-    "id": "2",
     "houseName": "airbnd-b2",
-    "price": "12",
-    "location": "sukkhanagar",
-    "rating": "4",
-    "photoUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFYqoKTu_o3Zns2yExbst2Co84Gpc2Q1RJbA&s"
+    "price": "223",
+    "location": "sydney",
+    "rating": "4.7",
+    "photoUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTapw_XWWJYkuY2JzBMXZsmTWtaGHL3p60_kw&s",
+    "id": "2"
   },
   {
     "houseName": "airbnb aus",
-    "price": "223",
+    "price": "2889",
     "location": "syd",
-    "rating": "4",
+    "rating": "43",
     "photoUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTapw_XWWJYkuY2JzBMXZsmTWtaGHL3p60_kw&s",
     "id": "0.7236719253831116"
   }

@@ -33,13 +33,22 @@ exports.getEditHome = (req, res, next) => {
   const editing = req.query.editing === 'true';
   Home.findById(homeId, (home) => {
     if (!home) {
-      return res.redirect('/admin/admin-home-list');
+      return res.redirect('/host/admin-home-list');
     }
-    res.render('/admin/edit-home', {
+    res.render('admin/edit-home', {
       home: home,
       pageTitle: 'EditHome',
       currentPage: 'host-homes',
       editing: editing,
     });
   });
+};
+
+exports.postEditHome = (req, res, next) => {
+  const { id, houseName, ppn, location, rating, photo } = req.body;
+  const home = new Home(houseName, ppn, location, rating, photo);
+  home.id = id;
+  home.save();
+
+  res.redirect('/host/admin-home-list');
 };
