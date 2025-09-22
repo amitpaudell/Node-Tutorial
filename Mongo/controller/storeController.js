@@ -28,11 +28,16 @@ exports.getBookings = (req, res, next) => {
 };
 
 exports.getFavouriteList = (req, res, next) => {
-  Home.fetchAll((registeredHomes) => {
-    res.render('store/favourite-list', {
-      registeredHomes: registeredHomes,
-      pageTitle: 'Favourite Home',
-      currentPage: 'Favourite',
+  Favourite.getFavourite((favourite) => {
+    Home.fetchAll((registeredHomes) => {
+      const favouriteHomes = registeredHomes.filter((home) =>
+        favourite.includes(home.id)
+      );
+      res.render('store/favourite-list', {
+        favouriteHomes: favouriteHomes,
+        pageTitle: 'Favourite Home',
+        currentPage: 'Favourite',
+      });
     });
   });
 };

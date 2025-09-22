@@ -1,9 +1,10 @@
 const Home = require('../models/home');
 
 exports.getAddHome = (req, res, next) => {
-  res.render('admin/add-home', {
+  res.render('admin/edit-home', {
     pageTitle: 'Add your home',
     currentPage: 'AddHome',
+    editing: false,
   });
 };
 
@@ -23,6 +24,22 @@ exports.getHostHomes = (req, res, next) => {
       registeredHomes: registeredHomes,
       pageTitle: 'Host Home List',
       currentPage: 'host-homes',
+    });
+  });
+};
+
+exports.getEditHome = (req, res, next) => {
+  const homeId = req.params.homeId;
+  const editing = req.query.editing === 'true';
+  Home.findById(homeId, (home) => {
+    if (!home) {
+      return res.redirect('/admin/admin-home-list');
+    }
+    res.render('/admin/edit-home', {
+      home: home,
+      pageTitle: 'EditHome',
+      currentPage: 'host-homes',
+      editing: editing,
     });
   });
 };
