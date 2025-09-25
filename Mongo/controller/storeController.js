@@ -66,3 +66,14 @@ exports.getHomeDetails = (req, res, next) => {
     }
   });
 };
+
+exports.deleteFav = (req, res, next) => {
+  const favId = req.params.favId;
+  console.log(favId);
+  Favourite.deleteFavourite(favId, (error) => {
+    if (error) {
+      console.log('Error while deleting favourite list');
+    }
+    res.redirect('/favourite');
+  });
+};

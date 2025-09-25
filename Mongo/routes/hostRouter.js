@@ -10,4 +10,6 @@ hostRouter.get('/admin-home-list', homeController.getHostHomes);
 hostRouter.get('/edit-home/:homeId', homeController.getEditHome);
 hostRouter.post('/edit-home', homeController.postEditHome);
 
+hostRouter.post('/delete-home/:homeId', homeController.postDeleteHome);
+
 exports.hostRouter = hostRouter;
