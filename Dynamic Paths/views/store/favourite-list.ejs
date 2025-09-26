@@ -1,0 +1,53 @@
+<%-include('../partials/head') %>
+</head>
+<body>
+<%-include('../partials/nav') %>
+    <main>
+      <h2 class="text-5xl text-center">Favourite Homes</h2>
+
+      <ul>
+        <div class="grid grid-cols-4 gap-2">
+        <% favouriteHomes.forEach((home)=>{ %>
+          <div class="flex flex-col bg-white shadow-sm border border-slate-200 rounded-lg my-6 w-96">
+            <div class="m-2.5 overflow-hidden rounded-md h-80 flex justify-center items-center">
+              <img class="w-full h-full object-cover" src=<%=home.photoUrl %> alt="profile-picture" />
+            </div>
+            <div class="p-6 text-center">
+              <h4 class="mb-1 text-xl font-semibold text-slate-800">
+                <%=home.houseName %>
+              </h4>
+              <p
+                class="text-sm font-semibold text-slate-500 ">
+                Rs <%=home.price %> per night
+              </p>
+              <p class="text-base text-slate-600 mt-4 font-light ">
+                Location: <%=home.location %> 
+              </p>
+            </div>
+            <div class="flex justify-center p-6 pt-2 gap-7">
+              <p>
+
+                Rating: <%=home.rating %>  ⭐
+              </p>
+              
+              <div class="flex flex-col space-y-6.5"> 
+              <button class="min-w-32  rounded-md bg-green-800 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
+                Book
+               </button>
+               <form action="/favourites/delete/<%=home.id%>" method="POST">
+                <button type="submit" class="min-w-32  rounded-md bg-red-800 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
+                  Remove From Favourite
+                 </button>
+               </form>
+              </div>
+
+             
+            </div>
+          </div>
+
+        <% }) %>
+        </div>
+      </ul>
+    </main>
+  </body>
+</html>
