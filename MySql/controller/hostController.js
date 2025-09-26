@@ -9,8 +9,8 @@ exports.getAddHome = (req, res, next) => {
 };
 
 exports.postAddHome = (req, res, next) => {
-  const { houseName, ppn, location, rating, photo } = req.body;
-  const home = new Home(houseName, ppn, location, rating, photo);
+  const { houseName, ppn, location, rating, photo, description } = req.body;
+  const home = new Home(houseName, ppn, location, rating, photo, description);
   home.save();
   res.render('admin/homeadded', {
     pageTitle: 'Home added',
@@ -19,7 +19,7 @@ exports.postAddHome = (req, res, next) => {
 };
 
 exports.getHostHomes = (req, res, next) => {
-  Home.fetchAll((registeredHomes) => {
+  Home.fetchAll().then(([registeredHomes]) => {
     res.render('admin/admin-home-list', {
       registeredHomes: registeredHomes,
       pageTitle: 'Host Home List',
@@ -31,7 +31,8 @@ exports.getHostHomes = (req, res, next) => {
 exports.getEditHome = (req, res, next) => {
   const homeId = req.params.homeId;
   const editing = req.query.editing === 'true';
-  Home.findById(homeId, (home) => {
+  Home.findById(homeId).then(([homes]) => {
+    const home = homes[0];
     if (!home) {
       return res.redirect('/host/admin-home-list');
     }
@@ -45,9 +46,17 @@ exports.getEditHome = (req, res, next) => {
 };
 
 exports.postEditHome = (req, res, next) => {
-  const { id, houseName, ppn, location, rating, photo } = req.body;
-  const home = new Home(houseName, ppn, location, rating, photo);
-  home.id = id;
+  const { id, houseName, ppn, location, rating, photo, description } = req.body;
+  const home = new Home(
+    houseName,
+    ppn,
+    location,
+    rating,
+    photo,
+    description,
+    id
+  );
+
   home.save();
 
   res.redirect('/host/admin-home-list');
@@ -55,10 +64,11 @@ exports.postEditHome = (req, res, next) => {
 
 exports.postDeleteHome = (req, res, next) => {
   const homeId = req.params.homeId;
-  Home.deleteById(homeId, (error) => {
-    if (error) {
+  Home.deleteById(homeId)
+    .then(() => {
+      res.redirect('/host/admin-home-list');
+    })
+    .catch((error) => {
       console.log('Error while deleting', error);
-    }
-    res.redirect('/host/admin-home-list');
-  });
+    });
 };
