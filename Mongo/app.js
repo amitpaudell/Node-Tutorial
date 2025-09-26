@@ -8,6 +8,7 @@ const express = require('express');
 const userRouter = require('./routes/userRouter');
 const { hostRouter } = require('./routes/hostRouter');
 const rootDir = require('./utils/pathUtil');
+const mongoConnect = require('./utils/databaseUtil');
 
 const app = express();
 
@@ -30,6 +31,9 @@ app.use((req, res, next) => {
 });
 
 const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`Server listening at port http://localhost:${PORT}`);
+mongoConnect((client) => {
+  console.log(client);
+  app.listen(PORT, () => {
+    console.log(`Server listening at port http://localhost:${PORT}`);
+  });
 });
