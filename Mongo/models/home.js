@@ -1,4 +1,4 @@
-const db = require('../utils/databaseUtil');
+const { getDB } = require('../utils/databaseUtil');
 const Favourite = require('./favourite');
 
 module.exports = class Home {
@@ -13,45 +13,16 @@ module.exports = class Home {
   }
 
   save() {
-    if (this.id) {
-      //update
-      return db.execute(
-        'UPDATE homes SET name=?,   price=?,description=?, imageURL=?, location=?, rating=? WHERE id=?',
-        [
-          this.houseName,
-          this.price,
-          this.description,
-          this.photoUrl,
-          this.location,
-          this.rating,
-          this.id,
-        ]
-      );
-    } else {
-      //insert
-      return db.execute(
-        'INSERT INTO homes (name,price,description,imageURL ,location,rating) VALUES(?,?,?,?,?,?)',
-        [
-          this.houseName,
-          this.price,
-          this.description,
-          this.photoUrl,
-          this.location,
-          this.rating,
-        ]
-      );
-    }
+    const db = getDB();
+    return db.collection('homes').insertOne(this);
   }
 
-  static fetchAll(callback) {
-    return db.execute('SELECT * FROM homes');
+  static fetchAll() {
+    const db = getDB();
+    return db.collection('homes').find().toArray();
   }
 
-  static findById(homeId, callback) {
-    return db.execute('SELECT * FROM homes WHERE id=?', [homeId]);
-  }
+  static findById(homeId, callback) {}
 
-  static deleteById(homeId, callback) {
-    return db.execute('DELETE  FROM homes WHERE id=?', [homeId]);
-  }
+  static deleteById(homeId, callback) {}
 };

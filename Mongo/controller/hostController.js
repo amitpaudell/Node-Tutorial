@@ -11,7 +11,9 @@ exports.getAddHome = (req, res, next) => {
 exports.postAddHome = (req, res, next) => {
   const { houseName, ppn, location, rating, photo, description } = req.body;
   const home = new Home(houseName, ppn, location, rating, photo, description);
-  home.save();
+  home.save().then(() => {
+    console.log('Home saved sucessfully');
+  });
   res.render('admin/homeadded', {
     pageTitle: 'Home added',
     currentPage: 'AddHome',
@@ -19,7 +21,7 @@ exports.postAddHome = (req, res, next) => {
 };
 
 exports.getHostHomes = (req, res, next) => {
-  Home.fetchAll().then(([registeredHomes]) => {
+  Home.fetchAll().then((registeredHomes) => {
     res.render('admin/admin-home-list', {
       registeredHomes: registeredHomes,
       pageTitle: 'Host Home List',
