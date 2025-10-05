@@ -32,7 +32,7 @@ exports.getFavouriteList = (req, res, next) => {
   Favourite.getFavourite((favourite) => {
     Home.fetchAll().then((registeredHomes) => {
       const favouriteHomes = registeredHomes.filter((home) =>
-        favourite.includes(home.id)
+        favourite.includes(home._id)
       );
       res.render('store/favourite-list', {
         favouriteHomes: favouriteHomes,
@@ -54,8 +54,7 @@ exports.postAddFavourite = (req, res, next) => {
 
 exports.getHomeDetails = (req, res, next) => {
   const homeId = req.params.homeId;
-  Home.findById(homeId).then(([homes]) => {
-    const home = homes[0];
+  Home.findById(homeId).then((home) => {
     if (!home) {
       console.log('home not found');
       res.redirect('/homes');
