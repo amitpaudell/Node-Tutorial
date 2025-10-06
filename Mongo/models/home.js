@@ -18,6 +18,22 @@ module.exports = class Home {
 
   save() {
     const db = getDB();
+    if (this._id) {
+      const updateFields = {
+        houseName: this.houseName,
+        price: this.price,
+        location: this.location,
+        rating: this.rating,
+        photoUrl: this.photoUrl,
+        description: this.description,
+      };
+      return db
+        .collection('homes')
+        .updateOne(
+          { _id: new ObjectId(String(this._id)) },
+          { $set: updateFields }
+        );
+    }
     return db.collection('homes').insertOne(this);
   }
 
@@ -34,5 +50,10 @@ module.exports = class Home {
       .next();
   }
 
-  static deleteById(homeId, callback) {}
+  static deleteById(homeId, callback) {
+    const db = getDB();
+    return db
+      .collection('homes')
+      .deleteOne({ _id: new ObjectId(String(homeId)) });
+  }
 };
