@@ -10,7 +10,14 @@ exports.getAddHome = (req, res, next) => {
 
 exports.postAddHome = (req, res, next) => {
   const { houseName, ppn, location, rating, photo, description } = req.body;
-  const home = new Home(houseName, ppn, location, rating, photo, description);
+  const home = new Home({
+    houseName: houseName,
+    price: ppn,
+    location: location,
+    rating: rating,
+    photoUrl: photo,
+    description: description,
+  });
   home.save().then(() => {
     console.log('Home saved sucessfully');
   });
@@ -21,7 +28,7 @@ exports.postAddHome = (req, res, next) => {
 };
 
 exports.getHostHomes = (req, res, next) => {
-  Home.fetchAll().then((registeredHomes) => {
+  Home.find().then((registeredHomes) => {
     res.render('admin/admin-home-list', {
       registeredHomes: registeredHomes,
       pageTitle: 'Host Home List',
@@ -48,18 +55,16 @@ exports.getEditHome = (req, res, next) => {
 
 exports.postEditHome = (req, res, next) => {
   const { id, houseName, ppn, location, rating, photo, description } = req.body;
-  const home = new Home(
-    houseName,
-    ppn,
-    location,
-    rating,
-    photo,
-    description,
-    id
-  );
-
-  home.save().then((result) => {
-    console.log('home updated', result);
+  Home.findById(id).then((home) => {
+    home.houseName = houseName;
+    home.price = ppn;
+    home.location = location;
+    home.rating = rating;
+    home.photoUrl = photo;
+    home.description = description;
+    home.save().then((result) => {
+      console.log('home updated', result);
+    });
   });
 
   res.redirect('/host/admin-home-list');
@@ -67,7 +72,7 @@ exports.postEditHome = (req, res, next) => {
 
 exports.postDeleteHome = (req, res, next) => {
   const homeId = req.params.homeId;
-  Home.deleteById(homeId)
+  Home.findByIdAndDelete(homeId)
     .then(() => {
       res.redirect('/host/admin-home-list');
     })
