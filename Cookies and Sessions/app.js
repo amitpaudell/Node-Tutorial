@@ -7,6 +7,8 @@ const express = require('express');
 //Local Module
 const userRouter = require('./routes/userRouter');
 const { hostRouter } = require('./routes/hostRouter');
+const authRouter = require('./routes/authRouter');
+
 const rootDir = require('./utils/pathUtil');
 
 const mongoose = require('mongoose');
@@ -25,6 +27,7 @@ app.use((req, res, next) => {
 app.use(express.urlencoded());
 
 app.use(userRouter);
+app.use(authRouter);
 app.use('/host', hostRouter);
 
 app.use((req, res, next) => {
