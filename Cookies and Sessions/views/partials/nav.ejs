@@ -8,6 +8,7 @@
           >airbnb</a
         >
       </li>
+      <% if(isLoggedIn) {%>
       <li>
         <a
           href="/homes"
@@ -43,7 +44,7 @@
           >Host Homes</a
         >
       </li>
-
+      <% } %> <% if(!isLoggedIn) {%>
       <li>
         <a
           href="/login"
@@ -51,6 +52,16 @@
           >Login
         </a>
       </li>
+      <% } else { %>
+      <form action="/logout" method="post">
+        <button
+          type="submit"
+          class="hover:bg-red-500 py-2 px-4 rounded transition duration-300"
+        >
+          Logout
+        </button>
+      </form>
+      <% } %>
     </ul>
   </nav>
 </header>
