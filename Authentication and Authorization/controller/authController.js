@@ -7,12 +7,38 @@ exports.getLogin = (req, res, next) => {
     pageTitle: 'Login',
     currentPage: 'Login',
     isLoggedIn: false,
+    errors: [],
+    oldInput: { email: '' },
   });
 };
-exports.postLogin = (req, res, next) => {
-  console.log(req.body);
+exports.postLogin = async (req, res, next) => {
+  const { email, password } = req.body;
+  const user = await User.findOne({ email: email });
+  if (!user) {
+    return res.status(422).render('auth/login', {
+      pageTitle: 'Login',
+      currentPage: 'login',
+      isLoggedIn: false,
+      errors: ["User doesn't exist"],
+      oldInput: { email },
+    });
+  }
+
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    return res.status(422).render('auth/login', {
+      pageTitle: 'Login',
+      currentPage: 'login',
+      isLoggedIn: false,
+      errors: ['Invalid Password'],
+      oldInput: { email },
+    });
+  }
+
   // res.cookie('isLoggedIn', true);
   req.session.isLoggedIn = true;
+  req.session.user = user;
+  await req.session.save();
   res.redirect('/');
 };
 
