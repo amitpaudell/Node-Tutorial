@@ -1,4 +1,6 @@
 const { check, validationResult } = require('express-validator');
+const User = require('../models/user');
+const bcrypt = require('bcryptjs');
 
 exports.getLogin = (req, res, next) => {
   res.render('auth/login', {
@@ -87,9 +89,12 @@ exports.postSignUp = [
     }),
 
   (req, res, next) => {
-    const { firstName, lastName, email, userType } = req.body;
+    const { firstName, lastName, password, email, userType } = req.body;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      //true=no error
+      //false=error
+      //So, !errors.isEmpty() means If there are errors present
       return res.status(422).render('auth/signup', {
         pageTitle: 'SignUp',
         currentPage: 'signup',
@@ -98,6 +103,29 @@ exports.postSignUp = [
         oldInput: { firstName, lastName, email, userType },
       });
     }
-    res.redirect('/login');
+
+    bcrypt.hash(password, 12).then((hashedPassword) => {
+      const user = new User({
+        firstName,
+        lastName,
+        email,
+        password: hashedPassword,
+        userType,
+      });
+      user
+        .save()
+        .then(() => {
+          res.redirect('/login');
+        })
+        .catch((err) => {
+          return res.status(422).render('auth/signup', {
+            pageTitle: 'SignUp',
+            currentPage: 'signup',
+            isLoggedIn: false,
+            errors: [err.message],
+            oldInput: { firstName, lastName, email, userType },
+          });
+        });
+    });
   },
 ];
