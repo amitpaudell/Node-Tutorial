@@ -5,6 +5,7 @@ const path = require('path');
 const express = require('express');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
+const multer = require('multer');
 const DB_PATH =
   'mongodb+srv://root:root@projectair.7zivzfv.mongodb.net/airbnb?retryWrites=true&w=majority&appName=projectAir';
 
@@ -27,13 +28,37 @@ const store = new MongoDBStore({
   collection: 'sessions',
 });
 
-app.use(express.static(path.join(rootDir, 'public')));
 app.use((req, res, next) => {
   console.log(req.url, req.method);
   next();
 });
 
+const randomString = (length) => {
+  const characters = 'abcdefghijklmnopqrstuvwxyz';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return result;
+};
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/');
+  },
+
+  filename: (req, file, cb) => {
+    cb(null, randomString(10) + '-' + file.originalname);
+  },
+});
+
+const multerOptions = {
+  storage,
+};
+
 app.use(express.urlencoded());
+app.use(multer(multerOptions).single('photo'));
+app.use(express.static(path.join(rootDir, 'public')));
 
 app.use(
   session({

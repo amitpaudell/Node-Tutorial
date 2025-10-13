@@ -12,6 +12,8 @@ exports.getAddHome = (req, res, next) => {
 
 exports.postAddHome = (req, res, next) => {
   const { houseName, ppn, location, rating, photo, description } = req.body;
+  console.log(houseName, ppn, location, rating, photo, description);
+  console.log(req.file);
   const home = new Home({
     houseName: houseName,
     price: ppn,
