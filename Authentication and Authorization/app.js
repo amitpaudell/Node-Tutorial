@@ -75,6 +75,7 @@ app.use((req, res, next) => {
     pageTitle: 'Not Found',
     currentPage: '404',
     isLoggedIn: req.isLoggedIn,
+    user: req.session.user,
   });
 });
 

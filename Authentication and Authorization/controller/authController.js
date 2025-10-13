@@ -9,6 +9,7 @@ exports.getLogin = (req, res, next) => {
     isLoggedIn: false,
     errors: [],
     oldInput: { email: '' },
+    user: {},
   });
 };
 exports.postLogin = async (req, res, next) => {
@@ -21,6 +22,7 @@ exports.postLogin = async (req, res, next) => {
       isLoggedIn: false,
       errors: ["User doesn't exist"],
       oldInput: { email },
+      user: {},
     });
   }
 
@@ -32,6 +34,7 @@ exports.postLogin = async (req, res, next) => {
       isLoggedIn: false,
       errors: ['Invalid Password'],
       oldInput: { email },
+      user: {},
     });
   }
 
@@ -56,6 +59,7 @@ exports.getSignUp = (req, res, next) => {
     isLoggedIn: false,
     errors: [],
     oldInput: { firstName: '', lastName: '', email: '', userType: '' },
+    user: {},
   });
 };
 
@@ -127,6 +131,7 @@ exports.postSignUp = [
         isLoggedIn: false,
         errors: errors.array().map((err) => err.msg),
         oldInput: { firstName, lastName, email, userType },
+        user: {},
       });
     }
 
@@ -150,6 +155,7 @@ exports.postSignUp = [
             isLoggedIn: false,
             errors: [err.message],
             oldInput: { firstName, lastName, email, userType },
+            user: {},
           });
         });
     });
