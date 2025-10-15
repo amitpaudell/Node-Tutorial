@@ -1,5 +1,5 @@
 const Home = require('../models/home');
-
+const fs = require('fs');
 exports.getAddHome = (req, res, next) => {
   res.render('admin/edit-home', {
     pageTitle: 'Add your home',
@@ -11,12 +11,13 @@ exports.getAddHome = (req, res, next) => {
 };
 
 exports.postAddHome = (req, res, next) => {
-  const { houseName, ppn, location, rating, photo, description } = req.body;
-  console.log(houseName, ppn, location, rating, photo, description);
+  const { houseName, ppn, location, rating, description } = req.body;
+  console.log(houseName, ppn, location, rating, description);
   console.log(req.file);
   if (!req.file) {
     return res.status(422).send('No image provided');
   }
+  const photo = req.file.path;
   const home = new Home({
     houseName: houseName,
     price: ppn,
@@ -67,14 +68,24 @@ exports.getEditHome = (req, res, next) => {
 };
 
 exports.postEditHome = (req, res, next) => {
-  const { id, houseName, ppn, location, rating, photo, description } = req.body;
+  const { id, houseName, ppn, location, rating, description } = req.body;
+
   Home.findById(id).then((home) => {
     home.houseName = houseName;
     home.price = ppn;
     home.location = location;
     home.rating = rating;
-    home.photoUrl = photo;
     home.description = description;
+    if (req.file) {
+      fs.unlink(home.photoUrl, (err) => {
+        if (err) {
+          console.log('Error while deleting file', err);
+        }
+      });
+
+      home.photoUrl = req.file.path;
+    }
+
     home.save().then((result) => {
       console.log('home updated', result);
     });

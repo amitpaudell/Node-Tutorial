@@ -68,6 +68,8 @@ const multerOptions = {
 app.use(express.urlencoded());
 app.use(multer(multerOptions).single('photo'));
 app.use(express.static(path.join(rootDir, 'public')));
+app.use('/uploads', express.static(path.join(rootDir, 'uploads')));
+app.use('/host/uploads', express.static(path.join(rootDir, 'uploads')));
 
 app.use(
   session({
